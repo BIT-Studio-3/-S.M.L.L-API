@@ -10,6 +10,8 @@ import cors from "cors"
 
 // Create an Express application
 const app = express();
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cors())
 
 
@@ -40,8 +42,7 @@ const swaggerOptions = {
 // Initialize swagger-jsdoc
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+
 
 // Use the routes module
 app.use('/api/users', userRoutes);

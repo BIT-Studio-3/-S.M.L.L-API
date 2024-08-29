@@ -11,7 +11,7 @@ import {
 import {
   validatePostUser,
   validatePutUser,
-} from "../../middlewares/validation.js";
+} from "../../middleware/validation.js";
 
 const userController = {
   get: getUsers,
@@ -29,7 +29,6 @@ const userRouter = createRouter(
 
 export default userRouter;
 
-
 /**
  * @swagger
  * components:
@@ -37,251 +36,253 @@ export default userRouter;
  *     User:
  *       type: object
  *       properties:
- *         email:
+ *         firstName:
  *           type: string
- *           example: "Email address"
-  *         name:
+ *           example: "John"
+ *         lastName:
  *           type: string
- *           example: "Username"
+ *           example: "Doe"
+ *         emailAddress:
+ *           type: string
+ *           example: "john.doe@example.com"
  *         password:
  *           type: string
- *           example: "Region Name"
+ *           example: "password123"
+ *         date:
+ *           type: string
+ *           example: "2023-10-01"
  */
 
-// /**
-//  * @swagger
-//  * /api/users:
-//  *   post:
-//  *     summary: Create a new User
-//  *     tags:
-//  *       - User
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             $ref: '#/components/schemas/User'
-//  *     responses:
-//  *       '201':
-//  *         description: User successfully created
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "User successfully created"
-//  *                 data:
-//  *                   type: array
-//  *                   items:
-//  *                     $ref: '#/components/schemas/User'
-//  *       '400':
-//  *         description: User with the same name already exists
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "User with the same name already exists"
-//  *       '500':
-//  *         description: Internal server error
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "An unexpected error occurred"
-//  */
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: Create a new User
+ *     tags:
+ *       - User
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       '201':
+ *         description: User successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User successfully created"
+ *                 data:
+ *                   $ref: '#/components/schemas/User'
+ *       '400':
+ *         description: User with the same email address already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User with the same email address already exists"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
 
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Get all users
+ *     tags:
+ *       - User
+ *     responses:
+ *       '200':
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/User'
+ *       '404':
+ *         description: No users found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No users found"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
 
-// /**
-//  * @swagger
-//  * /api/users:
-//  *   get:
-//  *     summary: Get all users
-//  *     tags:
-//  *       - User
-//  *     responses:
-//  *       '200':
-//  *         description: Success
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 data:
-//  *                   type: array
-//  *                   items:
-//  *                     $ref: '#/components/schemas/User'
-//  *       '404':
-//  *         description: No users found
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "No users found"
-//  *       '500':
-//  *         description: Internal server error
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "An unexpected error occurred"
-//  */
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get a user by id
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user id
+ *     responses:
+ *       '200':
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       '404':
+ *         description: No user found with the provided id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No user with the id: {id} found"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
 
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     summary: Update a user by id
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       '200':
+ *         description: User successfully updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User with the id: {id} successfully updated"
+ *                 data:
+ *                   $ref: '#/components/schemas/User'
+ *       '404':
+ *         description: No user found with the provided id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No user with the id: {id} found"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
 
-// /**
-//  * @swagger
-//  * /api/users/{id}:
-//  *   get:
-//  *     summary: Get an user by id
-//  *     tags:
-//  *       - User
-//  *     parameters:
-//  *       - in: path
-//  *         name: id
-//  *         required: true
-//  *         schema:
-//  *           type: string
-//  *         description: The user id
-//  *     responses:
-//  *       '200':
-//  *         description: Success
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               $ref: '#/components/schemas/User'
-//  *       '404':
-//  *         description: No user found with the provided id
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "No user with the id: {id} found"
-//  *       '500':
-//  *         description: Internal server error
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "An unexpected error occurred"
-//  */
-
-// /**
-//  * @swagger
-//  * /api/users/{id}:
-//  *   put:
-//  *     summary: Update an user by id
-//  *     tags:
-//  *       - User
-//  *     parameters:
-//  *       - in: path
-//  *         name: id
-//  *         required: true
-//  *         schema:
-//  *           type: string
-//  *         description: The user id
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             $ref: '#/components/schemas/User'
-//  *     responses:
-//  *       '200':
-//  *         description: User successfully updated
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "User with the id: {id} successfully updated"
-//  *                 data:
-//  *                   $ref: '#/components/schemas/User'
-//  *       '404':
-//  *         description: No user found with the provided id
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "No user with the id: {id} found"
-//  *       '500':
-//  *         description: Internal server error
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "An unexpected error occurred"
-//  */
-
-// /**
-//  * @swagger
-//  * /api/users/{id}:
-//  *   delete:
-//  *     summary: Delete an user by id
-//  *     tags:
-//  *       - User
-//  *     parameters:
-//  *       - in: path
-//  *         name: id
-//  *         required: true
-//  *         schema:
-//  *           type: string
-//  *         description: The user id
-//  *     responses:
-//  *       '200':
-//  *         description: User successfully deleted
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "User with the id: {id} successfully deleted"
-//  *       '404':
-//  *         description: No user found with the provided id
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "No user with the id: {id} found"
-//  *       '500':
-//  *         description: Internal server error
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "An unexpected error occurred"
-//  */
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Delete a user by id
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user id
+ *     responses:
+ *       '200':
+ *         description: User successfully deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User with the id: {id} successfully deleted"
+ *       '404':
+ *         description: No user found with the provided id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No user with the id: {id} found"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
