@@ -10,8 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model User {
-  id            String      @id @default(uuid())
-  name          String
-  email         String      @unique
-  password      String
+  userId            String      @id @default(uuid())
+  firstName         String
+  lastName          String
+  emailAddress      String      @unique
+  password          String
+  date              String
 }
