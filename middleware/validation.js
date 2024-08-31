@@ -17,8 +17,7 @@ import STATUS_CODES from "../utils/statusCode.js";
     //   "any.required": "lastName is required",
     // }),
     
-    emailAddress: Joi.string()
-      .email({ tlds: { allow: false } })
+    email: Joi.string()
       .required()
       .messages({
         "string.base": "email should be a string",

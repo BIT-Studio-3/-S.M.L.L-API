@@ -36,21 +36,15 @@ export default userRouter;
  *     User:
  *       type: object
  *       properties:
- *         firstName:
+ *         name:
  *           type: string
  *           example: "John"
- *         lastName:
- *           type: string
- *           example: "Doe"
- *         emailAddress:
+ *         email:
  *           type: string
  *           example: "john.doe@example.com"
  *         password:
  *           type: string
  *           example: "password123"
- *         date:
- *           type: string
- *           example: "2023-10-01"
  */
 
 /**
