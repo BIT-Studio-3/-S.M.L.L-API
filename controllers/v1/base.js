@@ -46,7 +46,7 @@ const getResources = async (req, res, model, include) => {
 const getResource = async (req, res, model) => {
   try {
     const resource = await prisma[model].findUnique({
-      where: { id: Number(req.params.id) },
+      where: { id: String(req.params.id) },
     });
 
     if (!resource) {
@@ -68,7 +68,7 @@ const getResource = async (req, res, model) => {
 const updateResource = async (req, res, model) => {
   try {
     let resource = await prisma[model].findUnique({
-      where: { id: Number(req.params.id) },
+      where: { id: String(req.params.id) },
     });
 
     if (!resource) {
@@ -78,7 +78,7 @@ const updateResource = async (req, res, model) => {
     }
 
     resource = await prisma[model].update({
-      where: { id: Number(req.params.id) },
+      where: { id: String(req.params.id) },
       data: { ...req.body },
     });
 
@@ -98,7 +98,7 @@ const updateResource = async (req, res, model) => {
 const deleteResource = async (req, res, model) => {
   try {
     const resource = await prisma[model].findUnique({
-      where: { id: Number(req.params.id) },
+      where: { id: String(req.params.id) },
     });
 
     if (!resource) {
@@ -108,7 +108,7 @@ const deleteResource = async (req, res, model) => {
     }
 
     await prisma[model].delete({
-      where: { id: Number(req.params.id) },
+      where: { id: String(req.params.id) },
     });
 
     return res.json({
