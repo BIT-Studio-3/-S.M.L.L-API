@@ -53,7 +53,7 @@ app.use("/auth", authRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
-app.get('/', function (_req, res) {
+app.get('/api/users', function (_req, res) {
   res.json({msg: 'This is CORS-enabled for all origins!'})
 })
 
