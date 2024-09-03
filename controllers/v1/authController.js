@@ -5,6 +5,10 @@ import dotenv from 'dotenv';
 
 dotenv.config(); // Load environment variables
 
+
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+console.log('JWT_LIFETIME:', process.env.JWT_LIFETIME);
+
 const prisma = new PrismaClient();
 
 const register = async (req, res) => {
@@ -79,9 +83,10 @@ const login = async (req, res) => {
         id: user.id,
         name: user.name,
       },
-      JWT_SECRET,
-      { expiresIn: JWT_LIFETIME }
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_LIFETIME }
     );
+    
 
     return res.status(200).json({
       msg: 'User successfully logged in',
