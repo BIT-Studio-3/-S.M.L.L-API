@@ -6,9 +6,6 @@ import userRoutes from './routes/v1/user.js';
 import authRoutes from "./routes/v1/authRoutes.js"
 import cors from "cors"
 import dotenv from 'dotenv';
-
-
-
 dotenv.config();
 
 

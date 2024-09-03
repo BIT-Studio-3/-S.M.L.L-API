@@ -1,15 +1,18 @@
-import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
+import bcryptjs from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { PrismaClient } from '@prisma/client';
+import dotenv from 'dotenv';
+
+dotenv.config(); // Load environment variables
 
 const prisma = new PrismaClient();
 
 const register = async (req, res) => {
   try {
-    const contentType = req.headers["content-type"];
-    if (!contentType || contentType !== "application/json") {
+    const contentType = req.headers['content-type'];
+    if (!contentType || contentType !== 'application/json') {
       return res.status(400).json({
-        msg: "Invalid Content-Type. Expected application/json",
+        msg: 'Invalid Content-Type. Expected application/json',
       });
     }
 
@@ -17,34 +20,19 @@ const register = async (req, res) => {
 
     let user = await prisma.user.findUnique({ where: { email } });
 
-    if (user) return res.status(409).json({ msg: "User already exists" });
+    if (user) return res.status(409).json({ msg: 'User already exists' });
 
-    /**
-     * A salt is random bits added to a password before it is hashed. Salts
-     * create unique passwords even if two users have the same passwords
-     */
     const salt = await bcryptjs.genSalt();
-
-    /**
-     * Generate a hash for a given string. The first argument
-     * is a string to be hashed, i.e., Pazzw0rd123 and the second
-     * argument is a salt, i.e., E1F53135E559C253
-     */
     const hashedPassword = await bcryptjs.hash(password, salt);
 
     user = await prisma.user.create({
       data: { name, email, password: hashedPassword },
     });
 
-    /**
-     * Delete the password property from the user object. It
-     * is a less expensive operation than querying the User
-     * table to get only user's email and name
-     */
     delete user.password;
 
     return res.status(201).json({
-      msg: "User successfully registered",
+      msg: 'User successfully registered',
       data: user,
     });
   } catch (err) {
@@ -56,10 +44,10 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const contentType = req.headers["content-type"];
-    if (!contentType || contentType !== "application/json") {
+    const contentType = req.headers['content-type'];
+    if (!contentType || contentType !== 'application/json') {
       return res.status(400).json({
-        msg: "Invalid Content-Type. Expected application/json",
+        msg: 'Invalid Content-Type. Expected application/json',
       });
     }
 
@@ -67,25 +55,25 @@ const login = async (req, res) => {
 
     const user = await prisma.user.findUnique({ where: { email } });
 
-    if (!user) return res.status(401).json({ msg: "Invalid email" });
+    if (!user) {
+      return res.status(401).json({ msg: 'Invalid email or password' });
+    }
 
-    /**
-     * Compare the given string, i.e., Pazzw0rd123, with the given
-     * hash, i.e., user's hashed password
-     */
-    
     const isPasswordCorrect = await bcryptjs.compare(password, user.password);
 
-    if (!isPasswordCorrect)
-      return res.status(401).json({ msg: "Invalid password" });
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ msg: 'Invalid email or password' });
+    }
 
     const { JWT_SECRET, JWT_LIFETIME } = process.env;
 
-    /**
-     * Return a JWT. The first argument is the payload, i.e., an object containing
-     * the authenticated user's id and name, the second argument is the secret
-     * or public/private key, and the third argument is the lifetime of the JWT
-     */
+    if (!JWT_SECRET) {
+      console.error('JWT_SECRET is not defined in the .env file');
+      return res.status(500).json({
+        msg: 'Internal server error',
+      });
+    }
+
     const token = jwt.sign(
       {
         id: user.id,
@@ -96,10 +84,11 @@ const login = async (req, res) => {
     );
 
     return res.status(200).json({
-      msg: "User successfully logged in",
+      msg: 'User successfully logged in',
       token: token,
     });
   } catch (err) {
+    console.error('Error in login function: ', err);
     return res.status(500).json({
       msg: err.message,
     });
