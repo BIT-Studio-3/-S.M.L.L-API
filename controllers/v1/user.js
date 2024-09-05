@@ -12,6 +12,7 @@ import {
     createResource,
     getResources,
     getResource,
+    getEmailResource,
     updateResource,
     deleteResource,
   } from "./base.js";
@@ -22,6 +23,8 @@ import {
   const getUsers = async (req, res) => getResources(req, res, "user");
   
   const getUser = async (req, res) => getResource(req, res, "user");
+
+  const getEmail = async (req, res) => getEmailResource(req, res, "user");
   
   const updateUser = async (req, res) =>
     updateResource(req, res, "user");
@@ -33,6 +36,7 @@ import {
     createUser,
     getUsers,
     getUser,
+    getEmail,
     updateUser,
     deleteUser,
   };

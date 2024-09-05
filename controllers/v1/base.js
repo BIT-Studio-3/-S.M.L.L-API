@@ -65,6 +65,26 @@ const getResource = async (req, res, model) => {
   }
 };
 
+const getEmailResource = async (req, res, model) => {
+  try {
+    const resource = await prisma[model].findUnique({
+      where: { email: String(req.params.email) },
+    });
+
+    if (!resource) {
+      return res
+        .status(STATUS_CODES.NOT_FOUND)
+        .json({ msg: `No ${model} with the email: ${req.params.email} found` });
+    }
+
+    return res.json({
+      data: resource,
+    });
+  } catch (err) {
+    return handleErrorResponse(res, err);
+  }
+};
+
 const updateResource = async (req, res, model) => {
   try {
     let resource = await prisma[model].findUnique({
@@ -127,6 +147,7 @@ export {
   createResource,
   getResources,
   getResource,
+  getEmailResource,
   updateResource,
   deleteResource,
 };

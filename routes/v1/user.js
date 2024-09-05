@@ -3,6 +3,7 @@ import createRouter from "./base.js";
 import {
   getUser,
   getUsers,
+  getEmail,
   createUser,
   updateUser,
   deleteUser,
@@ -16,6 +17,7 @@ import {
 const userController = {
   get: getUsers,
   getById: getUser,
+  getByEmail: getEmail,
   create: createUser,
   update: updateUser,
   delete: deleteUser,
@@ -178,6 +180,52 @@ export default userRouter;
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
+
+
+/**
+ * @swagger
+ * /api/users/email/{email}:
+ *   get:
+ *     summary: Get a user by email
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - in: path
+ *         name: email
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user email
+ *     responses:
+ *       '200':
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       '404':
+ *         description: No user found with the provided email
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No user with the email: {email} found"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
+
+
 
 /**
  * @swagger

@@ -13,8 +13,7 @@ const app = express();
 
 // Configure CORS to allow requests from your frontend
 const corsOptions = {
-  origin: 'https://s-m-l-l-webservice.onrender.com/',
-  origin: 'http://localhost:3000/', // Adjust this to your frontend URL
+  origin: ['https://s-m-l-l-webservice.onrender.com', ' http://localhost:5173'], // Adjust this to your frontend URLs
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
