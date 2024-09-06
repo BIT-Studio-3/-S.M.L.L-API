@@ -13,7 +13,7 @@ const app = express();
 
 // Configure CORS to allow requests from your frontend
 const corsOptions = {
-  origin: ['https://s-m-l-l-webservice.onrender.com', ' http://localhost:51730, https://s-m-l-l.netlify.app/'], // Adjust this to your frontend URLs
+  origin: ['https://s-m-l-l.netlify.app/'], // Adjust this to your frontend URLs
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
