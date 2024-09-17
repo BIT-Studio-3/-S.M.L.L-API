@@ -54,6 +54,7 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 // Use the routes module
 app.use('/api/users', userRoutes);
 app.use('/auth', authRoutes);
+app.use('/api/journals',journalRoutes);
 
 // Setup swagger-ui after swaggerDocs is initialized
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
