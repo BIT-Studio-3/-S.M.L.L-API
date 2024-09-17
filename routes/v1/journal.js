@@ -1,4 +1,3 @@
-import createRouter from "./base.js";
 
 import {
   getJournal,
@@ -8,20 +7,11 @@ import {
   deleteJournal,
 } from "../../controllers/v1/journal.js";
 
-import { validatePutJournal,validatePostJournal } from "../../middleware/validation.js";
-const journalController = {
-  get: getJournals,
-  getById: getJournal,
-  create: createJournal,
-  update: updateJournal,
-  delete: deleteJournal,
-};
+import {
+ validatePutJournal,
+ validatePostJournal
+} from "../../middleware/validation.js";
 
-const journalRouter = createRouter(
-  journalController,
-  validatePutJournal,
-  validatePostJournal
-);
 
 export default journalRouter;
 
