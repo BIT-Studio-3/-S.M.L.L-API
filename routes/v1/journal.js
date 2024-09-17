@@ -8,7 +8,7 @@ import {
   deleteJournal,
 } from "../../controllers/v1/journal.js";
 
-
+import { validatePutJournal,validatePostJournal } from "../../middleware/validation.js";
 const journalController = {
   get: getJournals,
   getById: getJournal,
@@ -18,7 +18,9 @@ const journalController = {
 };
 
 const journalRouter = createRouter(
-  journalController
+  journalController,
+  validatePutJournal,
+  validatePostJournal
 );
 
 export default journalRouter;
@@ -58,16 +60,6 @@ export default journalRouter;
  *                   example: "Journal successfully created"
  *                 data:
  *                   $ref: '#/components/schemas/Journal'
- *       '400':
- *         description: Journal with the same email address already exists
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Journal with the same email address already exists"
  *       '500':
  *         description: Internal server error
  *         content:
@@ -164,49 +156,6 @@ export default journalRouter;
  *                   example: "An unexpected error occurred"
  */
 
-
-/**
- * @swagger
- * /api/v1/journals/email/{email}:
- *   get:
- *     summary: Get a journal by email
- *     tags:
- *       - Journal
- *     parameters:
- *       - in: path
- *         name: email
- *         required: true
- *         schema:
- *           type: string
- *         description: The journal email
- *     responses:
- *       '200':
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Journal'
- *       '404':
- *         description: No journal found with the provided email
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No journal with the email: {email} found"
- *       '500':
- *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
- */
 
 
 
