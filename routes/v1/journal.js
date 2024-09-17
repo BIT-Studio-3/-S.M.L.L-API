@@ -23,7 +23,7 @@ const journalRouter = createRouter(
   validatePostJournal
 );
 
-export default journalRouter;
+
 
 /**
  * @swagger
@@ -260,3 +260,4 @@ export default journalRouter;
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
+export default journalRouter;
