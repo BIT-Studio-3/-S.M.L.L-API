@@ -22,5 +22,6 @@ model Journal {
   drinkId      String   @unique // Making drinkId unique
   userId       String
   user         User     @relation(fields: [userId], references: [id])
+  timeDrunk    DateTime 
   createdAt    DateTime @default(now())
 }

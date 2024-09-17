@@ -8,10 +8,6 @@ import {
   deleteJournal,
 } from "../../controllers/v1/journal.js";
 
-import {
-    validatePostJournal,
-    validatePutJournal
-} from "../../middleware/validation.js";
 
 const journalController = {
   get: getJournals,
@@ -22,9 +18,7 @@ const journalController = {
 };
 
 const journalRouter = createRouter(
-  journalController,
-  validatePostJournal,
-  validatePutJournal
+  journalController
 );
 
 export default journalRouter;
@@ -36,33 +30,24 @@ export default journalRouter;
  *     Journal:
  *       type: object
  *       properties:
- *         name:
- *           type: string
- *           example: "John"
- *         email:
- *           type: string
- *           example: "john.doe@example.com"
- *         password:
- *           type: string
- *           example: "password123"
  */
 
 /**
  * @swagger
  * /api/v1/journals:
  *   post:
- *     summary: Create a new User
+ *     summary: Create a new Journal
  *     tags:
- *       - User
+ *       - Journal
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             $ref: '#/components/schemas/Journal'
  *     responses:
  *       '201':
- *         description: User successfully created
+ *         description: Journal successfully created
  *         content:
  *           application/json:
  *             schema:
@@ -70,11 +55,11 @@ export default journalRouter;
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "User successfully created"
+ *                   example: "Journal successfully created"
  *                 data:
- *                   $ref: '#/components/schemas/User'
+ *                   $ref: '#/components/schemas/Journal'
  *       '400':
- *         description: User with the same email address already exists
+ *         description: Journal with the same email address already exists
  *         content:
  *           application/json:
  *             schema:
@@ -82,7 +67,7 @@ export default journalRouter;
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "User with the same email address already exists"
+ *                   example: "Journal with the same email address already exists"
  *       '500':
  *         description: Internal server error
  *         content:
@@ -97,11 +82,11 @@ export default journalRouter;
 
 /**
  * @swagger
- * /api/users:
+ * /api/v1/journals:
  *   get:
- *     summary: Get all users
+ *     summary: Get all journals
  *     tags:
- *       - User
+ *       - Journal
  *     responses:
  *       '200':
  *         description: Success
@@ -113,9 +98,9 @@ export default journalRouter;
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/User'
+ *                     $ref: '#/components/schemas/Journal'
  *       '404':
- *         description: No users found
+ *         description: No journals found
  *         content:
  *           application/json:
  *             schema:
@@ -123,7 +108,7 @@ export default journalRouter;
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "No users found"
+ *                   example: "No journals found"
  *       '500':
  *         description: Internal server error
  *         content:
@@ -138,27 +123,27 @@ export default journalRouter;
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/v1/journals/{id}:
  *   get:
- *     summary: Get a user by id
+ *     summary: Get a journal by id
  *     tags:
- *       - User
+ *       - Journal
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: The user id
+ *         description: The journal id
  *     responses:
  *       '200':
  *         description: Success
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/Journal'
  *       '404':
- *         description: No user found with the provided id
+ *         description: No journal found with the provided id
  *         content:
  *           application/json:
  *             schema:
@@ -166,7 +151,7 @@ export default journalRouter;
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "No user with the id: {id} found"
+ *                   example: "No journal with the id: {id} found"
  *       '500':
  *         description: Internal server error
  *         content:
@@ -182,27 +167,27 @@ export default journalRouter;
 
 /**
  * @swagger
- * /api/users/email/{email}:
+ * /api/v1/journals/email/{email}:
  *   get:
- *     summary: Get a user by email
+ *     summary: Get a journal by email
  *     tags:
- *       - User
+ *       - Journal
  *     parameters:
  *       - in: path
  *         name: email
  *         required: true
  *         schema:
  *           type: string
- *         description: The user email
+ *         description: The journal email
  *     responses:
  *       '200':
  *         description: Success
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/Journal'
  *       '404':
- *         description: No user found with the provided email
+ *         description: No journal found with the provided email
  *         content:
  *           application/json:
  *             schema:
@@ -210,7 +195,7 @@ export default journalRouter;
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "No user with the email: {email} found"
+ *                   example: "No journal with the email: {email} found"
  *       '500':
  *         description: Internal server error
  *         content:
@@ -227,27 +212,27 @@ export default journalRouter;
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/v1/journals/{id}:
  *   put:
- *     summary: Update a user by id
+ *     summary: Update a journal by id
  *     tags:
- *       - User
+ *       - Journal
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: The user id
+ *         description: The journal id
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             $ref: '#/components/schemas/Journal'
  *     responses:
  *       '200':
- *         description: User successfully updated
+ *         description: Journal successfully updated
  *         content:
  *           application/json:
  *             schema:
@@ -255,11 +240,11 @@ export default journalRouter;
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "User with the id: {id} successfully updated"
+ *                   example: "Journal with the id: {id} successfully updated"
  *                 data:
- *                   $ref: '#/components/schemas/User'
+ *                   $ref: '#/components/schemas/Journal'
  *       '404':
- *         description: No user found with the provided id
+ *         description: No journal found with the provided id
  *         content:
  *           application/json:
  *             schema:
@@ -267,7 +252,7 @@ export default journalRouter;
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "No user with the id: {id} found"
+ *                   example: "No journal with the id: {id} found"
  *       '500':
  *         description: Internal server error
  *         content:
@@ -282,21 +267,21 @@ export default journalRouter;
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/v1/journals/{id}:
  *   delete:
- *     summary: Delete a user by id
+ *     summary: Delete a journal by id
  *     tags:
- *       - User
+ *       - Journal
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: The user id
+ *         description: The journal id
  *     responses:
  *       '200':
- *         description: User successfully deleted
+ *         description: Journal successfully deleted
  *         content:
  *           application/json:
  *             schema:
@@ -304,9 +289,9 @@ export default journalRouter;
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "User with the id: {id} successfully deleted"
+ *                   example: "Journal with the id: {id} successfully deleted"
  *       '404':
- *         description: No user found with the provided id
+ *         description: No journal found with the provided id
  *         content:
  *           application/json:
  *             schema:
@@ -314,7 +299,7 @@ export default journalRouter;
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "No user with the id: {id} found"
+ *                   example: "No journal with the id: {id} found"
  *       '500':
  *         description: Internal server error
  *         content:

@@ -3,6 +3,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import userRoutes from './routes/v1/user.js';
 import authRoutes from './routes/v1/authRoutes.js';
+import journalRoutes from './routes/v1/journal.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
