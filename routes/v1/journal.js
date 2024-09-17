@@ -13,8 +13,8 @@ import {
 } from "../../middleware/validation.js";
 
 
-export default journalRouter;
 
+router.post(createJournal,validatePostJournal) 
 /**
  * @swagger
  * components:
@@ -61,7 +61,7 @@ export default journalRouter;
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-
+router.get(getJournals)
 /**
  * @swagger
  * /api/v1/journals:
@@ -102,7 +102,7 @@ export default journalRouter;
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-
+router.get()
 /**
  * @swagger
  * /api/v1/journals/{id}:
@@ -250,3 +250,4 @@ export default journalRouter;
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
+export default journalRouter;
