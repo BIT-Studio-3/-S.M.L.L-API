@@ -41,7 +41,7 @@ export default userRouter;
  *         name:
  *           type: string
  *           example: "John"
- *         emailAddress:
+ *         email:
  *           type: string
  *           example: "john.doe@example.com"
  *         password:
