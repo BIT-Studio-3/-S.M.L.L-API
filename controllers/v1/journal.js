@@ -12,7 +12,6 @@ import {
     createResource,
     getResources,
     getResource,
-    getEmailResource,
     updateResource,
     deleteResource,
   } from "./base.js";

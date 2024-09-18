@@ -14,6 +14,33 @@ import {
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Journal:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "1"
+ *         drinkId:
+ *           type: string
+ *           example: "drink-uuid-1234"
+ *         userId:
+ *           type: string
+ *           example: "user-uuid-5678"
+ *         timeDrunk:
+ *           type: string
+ *           format: date-time
+ *           example: "2023-09-18T12:34:56Z"
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2023-09-18T12:34:56Z"
+ */
+
+// POST request to create a new journal
 router.post('/journals', validatePostJournal, createJournal);
 /**
  * @swagger
@@ -27,7 +54,18 @@ router.post('/journals', validatePostJournal, createJournal);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Journal'
+ *             type: object
+ *             properties:
+ *               drinkId:
+ *                 type: string
+ *                 example: "drink-uuid-1234"
+ *               userId:
+ *                 type: string
+ *                 example: "user-uuid-5678"
+ *               timeDrunk:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2023-09-18T12:34:56Z"
  *     responses:
  *       '201':
  *         description: Journal successfully created
@@ -53,7 +91,7 @@ router.post('/journals', validatePostJournal, createJournal);
  *                   example: "An unexpected error occurred"
  */
 
-// Get all journals
+// GET all journals
 router.get('/journals', getJournals);
 /**
  * @swagger
@@ -96,7 +134,7 @@ router.get('/journals', getJournals);
  *                   example: "An unexpected error occurred"
  */
 
-// Get a journal by id
+// GET a journal by id
 router.get('/journals/:id', getJournal);
 /**
  * @swagger
@@ -141,7 +179,7 @@ router.get('/journals/:id', getJournal);
  *                   example: "An unexpected error occurred"
  */
 
-// Update a journal by id
+// PUT update a journal by id
 router.put('/journals/:id', validatePutJournal, updateJournal);
 /**
  * @swagger
@@ -162,7 +200,18 @@ router.put('/journals/:id', validatePutJournal, updateJournal);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Journal'
+ *             type: object
+ *             properties:
+ *               drinkId:
+ *                 type: string
+ *                 example: "drink-uuid-1234"
+ *               userId:
+ *                 type: string
+ *                 example: "user-uuid-5678"
+ *               timeDrunk:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2023-09-18T12:34:56Z"
  *     responses:
  *       '200':
  *         description: Journal successfully updated
@@ -198,7 +247,7 @@ router.put('/journals/:id', validatePutJournal, updateJournal);
  *                   example: "An unexpected error occurred"
  */
 
-// Delete a journal by id
+// DELETE a journal by id
 router.delete('/journals/:id', deleteJournal);
 /**
  * @swagger

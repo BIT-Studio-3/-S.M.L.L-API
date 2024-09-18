@@ -44,8 +44,11 @@ import STATUS_CODES from "../utils/statusCode.js";
   });
 
 const journalSchema = Joi.object ({
-  timeDrunk: Joi.date().required().messages({
-    "date.base": "date should be a date"
+  timeDrunk: Joi.date()
+  .required()
+  .messages({
+    "date.base": "date should be a date",
+    "date.empty": "date should not be empty"
   })
 })
 
