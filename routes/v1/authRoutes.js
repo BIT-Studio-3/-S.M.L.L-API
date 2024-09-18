@@ -7,19 +7,35 @@ const router = Router();
 /**
  * @swagger
  * components:
- *  schemas:
+ *   schemas:
  *     User:
  *       type: object
  *       properties:
  *         name:
  *           type: string
  *           example: "John"
- *         emailAddress:
+ *         email:
  *           type: string
+ *           format: email
  *           example: "john.doe@example.com"
  *         password:
  *           type: string
  *           example: "password123"
+ *         loginAttempts:
+ *           type: integer
+ *           example: 0
+ *         lastLoginAttempt:
+ *           type: string
+ *           format: date-time
+ *           example: "2024-07-14T12:34:56Z"
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2024-07-14T12:34:56Z"
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2024-07-14T12:34:56Z"
  */
 
 /**

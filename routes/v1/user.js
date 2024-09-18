@@ -47,6 +47,13 @@ export default userRouter;
  *         password:
  *           type: string
  *           example: "password123"
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   security:
+ *     - BearerAuth: []
  */
 
 /**
@@ -140,11 +147,13 @@ export default userRouter;
 
 /**
  * @swagger
- * /api/v1/users:/{id}:
+ * /api/v1/users/{id}:
  *   get:
  *     summary: Get a user by id
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -184,7 +193,7 @@ export default userRouter;
 
 /**
  * @swagger
- * /api/v1/users:/email/{email}:
+ * /api/v1/users/email/{email}:
  *   get:
  *     summary: Get a user by email
  *     tags:
@@ -229,11 +238,13 @@ export default userRouter;
 
 /**
  * @swagger
- * /api/v1/users:/{id}:
+ * /api/v1/users/{id}:
  *   put:
  *     summary: Update a user by id
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -284,7 +295,7 @@ export default userRouter;
 
 /**
  * @swagger
- * /api/v1/users:/{id}:
+ * /api/v1/users/{id}:
  *   delete:
  *     summary: Delete a user by id
  *     tags:
