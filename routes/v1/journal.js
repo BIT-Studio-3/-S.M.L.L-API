@@ -1,4 +1,4 @@
-
+import express from 'express';
 import {
   getJournal,
   getJournals,
@@ -8,22 +8,13 @@ import {
 } from "../../controllers/v1/journal.js";
 
 import {
- validatePutJournal,
- validatePostJournal
+  validatePutJournal,
+  validatePostJournal
 } from "../../middleware/validation.js";
 
+const router = express.Router();
 
-
-router.post(createJournal,validatePostJournal) 
-/**
- * @swagger
- * components:
- *   schemas:
- *     Journal:
- *       type: object
- *       properties:
- */
-
+router.post('/journals', validatePostJournal, createJournal);
 /**
  * @swagger
  * /api/v1/journals:
@@ -61,7 +52,9 @@ router.post(createJournal,validatePostJournal)
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-router.get(getJournals)
+
+// Get all journals
+router.get('/journals', getJournals);
 /**
  * @swagger
  * /api/v1/journals:
@@ -102,7 +95,9 @@ router.get(getJournals)
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-router.get()
+
+// Get a journal by id
+router.get('/journals/:id', getJournal);
 /**
  * @swagger
  * /api/v1/journals/{id}:
@@ -146,9 +141,8 @@ router.get()
  *                   example: "An unexpected error occurred"
  */
 
-
-
-
+// Update a journal by id
+router.put('/journals/:id', validatePutJournal, updateJournal);
 /**
  * @swagger
  * /api/v1/journals/{id}:
@@ -204,6 +198,8 @@ router.get()
  *                   example: "An unexpected error occurred"
  */
 
+// Delete a journal by id
+router.delete('/journals/:id', deleteJournal);
 /**
  * @swagger
  * /api/v1/journals/{id}:
@@ -250,4 +246,5 @@ router.get()
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-export default journalRouter;
+
+export default router;
