@@ -1,44 +1,37 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 class UserRepository {
   async create(data) {
-    return prisma.user.create({ data });
+    return await prisma.user.create({ data });
   }
 
   async findAll() {
-    return prisma.user.findMany({
-      select: {
-        id: true,
-        name: true,
-        emailAddress: true,
-        // other fields
-      },
-    });
+    return await prisma.user.findMany();
   }
 
   async findById(id) {
-    return prisma.user.findUnique({
+    return await prisma.user.findUnique({
       where: { id },
     });
   }
 
-  async findByEmail(emailAddress) {
-    return prisma.user.findUnique({
-      where: { emailAddress },
+  async findByEmail(email) {
+    return await prisma.user.findUnique({
+      where: { email },
     });
   }
 
   async update(id, data) {
-    return prisma.user.update({
+    return await prisma.user.update({
       where: { id },
       data,
     });
   }
 
   async delete(id) {
-    return prisma.user.delete({
+    return await prisma.user.delete({
       where: { id },
     });
   }
