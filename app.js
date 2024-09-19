@@ -3,6 +3,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import userRoutes from './routes/v1/user.js';
 import authRoutes from './routes/v1/authRoutes.js';
+import journalRoutes from './routes/v1/journal.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
@@ -13,7 +14,7 @@ const app = express();
 
 // Configure CORS to allow requests from your frontend
 const corsOptions = {
-  origin: ['https://s-m-l-l.netlify.app', 'https://s-m-l-l-webservice.onrender.com'],  // Include https://
+  origin: ['https://s-m-l-l.netlify.app', 'http://localhost:3000/'],  // Include https://
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
@@ -40,7 +41,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'https://s-m-l-l-webservice.onrender.com',
+        url: 'http://localhost:3000/',
       },
     ],
   },
@@ -51,13 +52,18 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 // Use the routes module
-app.use('/api/users', userRoutes);
-app.use('/auth', authRoutes);
+
+
+app.use('/api/v1/journals',journalRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/auth/', authRoutes);
+
+
 
 // Setup swagger-ui after swaggerDocs is initialized
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.get('/api/users', function (_req, res) {
+app.get('/api/v1/users', function (_req, res) {
   res.json({ msg: 'This is CORS-enabled for all origins!' });
 });
 

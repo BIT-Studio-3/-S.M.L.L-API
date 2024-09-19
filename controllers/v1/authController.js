@@ -100,4 +100,62 @@ const login = async (req, res) => {
   }
 };
 
-export { register, login };
+
+const update = async (req, res) => {
+  try {
+    const userId = req.user.id; // Get the authenticated user's ID from the request
+
+    const { newEmail, newName, newPassword } = req.body;
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    const updatedData = {};
+
+    if (newEmail) updatedData.email = newEmail;
+    if (newName) updatedData.name = newName;
+    if (newPassword) {
+      const salt = await bcryptjs.genSalt();
+      updatedData.password = await bcryptjs.hash(newPassword, salt);
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: updatedData,
+    });
+
+    const { JWT_SECRET, JWT_LIFETIME } = process.env;
+
+    if (!JWT_SECRET) {
+      console.error('JWT_SECRET is not defined in the .env file');
+      return res.status(500).json({
+        msg: 'Internal server error',
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        id: updatedUser.id,
+        name: updatedUser.name,
+      },
+      JWT_SECRET,
+      { expiresIn: JWT_LIFETIME }
+    );
+
+    return res.status(200).json({
+      msg: 'User updated successfully',
+      user: updatedUser,
+      token,
+    });
+  } catch (err) {
+    console.error('Error in update function: ', err);
+    return res.status(500).json({
+      msg: err.message,
+    });
+  }
+};
+
+export { register, login, update };

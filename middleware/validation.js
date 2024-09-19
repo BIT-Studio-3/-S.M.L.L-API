@@ -43,7 +43,14 @@ import STATUS_CODES from "../utils/statusCode.js";
     // }),
   });
 
-
+const journalSchema = Joi.object ({
+  timeDrunk: Joi.date()
+  .required()
+  .messages({
+    "date.base": "date should be a date",
+    "date.empty": "date should not be empty"
+  })
+})
 
 
   const validateSchema = (schema, isRequired = false) => {
@@ -65,9 +72,14 @@ import STATUS_CODES from "../utils/statusCode.js";
   const validatePostUser = validateSchema(userSchema, true);
   const validatePutUser = validateSchema(userSchema);
 
+  const validatePostJournal = validateSchema(journalSchema, true);
+  const validatePutJournal = validateSchema(journalSchema);
+
   
   export {
     validatePostUser,
     validatePutUser,
+    validatePostJournal,
+    validatePutJournal
   };
   
