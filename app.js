@@ -3,6 +3,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import userRoutes from './routes/v1/user.js';
 import authRoutes from './routes/v1/authRoutes.js';
+import journalRoutes from './routes/v1/journal.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
@@ -51,6 +52,9 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 // Use the routes module
+
+
+app.use('/api/v1/journals',journalRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth/', authRoutes);
 

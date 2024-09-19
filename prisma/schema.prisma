@@ -14,8 +14,20 @@ model User {
   name          String
   email         String      @unique
   password      String
+  journals      Journal[]   // Adding a relation field for User and Journal
+}
+
+model Journal {
+  id           String   @id @default(uuid())
+  drinkId      String   @unique // Making drinkId unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  timeDrunk    DateTime 
+  createdAt    DateTime @default(now())
+
   loginAttempts    Int           @default(0)
   lastLoginAttempt DateTime?
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @default(now())
+
 }
