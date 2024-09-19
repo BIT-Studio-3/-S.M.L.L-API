@@ -41,7 +41,7 @@ const router = express.Router();
  */
 
 // POST request to create a new journal
-router.post('/journals', validatePostJournal, createJournal);
+router.post('/', validatePostJournal, createJournal);
 /**
  * @swagger
  * /api/v1/journals:
@@ -92,7 +92,7 @@ router.post('/journals', validatePostJournal, createJournal);
  */
 
 // GET all journals
-router.get('/journals', getJournals);
+router.get('/', getJournals);
 /**
  * @swagger
  * /api/v1/journals:
@@ -135,7 +135,7 @@ router.get('/journals', getJournals);
  */
 
 // GET a journal by id
-router.get('/journals/:id', getJournal);
+router.get('/:id', getJournal);
 /**
  * @swagger
  * /api/v1/journals/{id}:
@@ -180,7 +180,7 @@ router.get('/journals/:id', getJournal);
  */
 
 // PUT update a journal by id
-router.put('/journals/:id', validatePutJournal, updateJournal);
+router.put('/:id', validatePutJournal, updateJournal);
 /**
  * @swagger
  * /api/v1/journals/{id}:
@@ -248,7 +248,7 @@ router.put('/journals/:id', validatePutJournal, updateJournal);
  */
 
 // DELETE a journal by id
-router.delete('/journals/:id', deleteJournal);
+router.delete('/:id', deleteJournal);
 /**
  * @swagger
  * /api/v1/journals/{id}:
