@@ -14,6 +14,10 @@ model User {
   name          String
   email         String      @unique
   password      String
+  loginAttempts    Int           @default(0)
+  lastLoginAttempt DateTime?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @default(now())
   journals      Journal[]   // Adding a relation field for User and Journal
 }
 
@@ -24,10 +28,5 @@ model Journal {
   user         User     @relation(fields: [userId], references: [id])
   timeDrunk    DateTime 
   createdAt    DateTime @default(now())
-
-  loginAttempts    Int           @default(0)
-  lastLoginAttempt DateTime?
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @default(now())
 
 }

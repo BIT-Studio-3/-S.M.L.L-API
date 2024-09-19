@@ -14,7 +14,7 @@ import {
     getResource,
     updateResource,
     deleteResource,
-  } from "./base.js";
+  } from "./baseController.js";
 
   const createJournal = async (req, res) =>
     createResource(req, res, "user");

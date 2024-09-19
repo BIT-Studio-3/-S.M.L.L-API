@@ -5,7 +5,7 @@ import {
   createJournal,
   updateJournal,
   deleteJournal,
-} from "../../controllers/v1/journal.js";
+} from "../../controllers/v1/journalController.js";
 
 import {
   validatePutJournal,
