@@ -10,13 +10,23 @@
 import JournalRepository from "../../repositories/journalRepositories.js";
 import {
   createEntity,
-  getEntities,
-  getEntity,
   updateEntity,
   deleteEntity,
 } from "./baseController.js";
 
-const createJournal = createEntity(JournalRepository);
+const createJournal = async (req, res) => {
+  try {
+    const { drinkId, userId, timeDrunk = new Date() } = req.body; // Set default value for timeDrunk
+    const journal = await JournalRepository.create({
+      drinkId,
+      userId,
+      timeDrunk,
+    });
+    return res.status(201).json({ data: journal });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
 
 const getJournals = async (req, res) => {
   try {
