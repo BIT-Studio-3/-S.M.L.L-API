@@ -9,7 +9,6 @@
 
 import JournalRepository from "../../repositories/journalRepositories.js";
 import {
-  createEntity,
   updateEntity,
   deleteEntity,
 } from "./baseController.js";
