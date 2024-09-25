@@ -26,7 +26,7 @@ const userController = {
 const userRouter = createRouter(
   userController,
   validatePostUser,
-  validatePutUser
+  validatePutUser,
 );
 
 export default userRouter;
@@ -117,12 +117,9 @@ export default userRouter;
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/User'
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
  *       '404':
  *         description: No users found
  *         content:
@@ -152,8 +149,6 @@ export default userRouter;
  *     summary: Get a user by id
  *     tags:
  *       - User
- *     security:
- *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -189,7 +184,6 @@ export default userRouter;
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-
 
 /**
  * @swagger
@@ -233,8 +227,6 @@ export default userRouter;
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-
-
 
 /**
  * @swagger

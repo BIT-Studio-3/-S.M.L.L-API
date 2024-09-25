@@ -1,7 +1,10 @@
 import { Router } from "express";
 import authRoute from "../../middleware/authMiddleware.js"; // Import the auth middleware
-import { register, login, update } from "../../controllers/v1/authController.js";
-
+import {
+  register,
+  login,
+  update,
+} from "../../controllers/v1/authController.js";
 
 const router = Router();
 
@@ -136,13 +139,12 @@ router.route("/register").post(register);
  */
 router.route("/login").post(login);
 
-
 /**
  * @swagger
  * /api/v1/auth/update/{id}:
  *   put:
  *     summary: Update user information
- *     tags: 
+ *     tags:
  *       - Auth
  *     security:
  *       - BearerAuth: []

@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 import {
   getJournal,
   getJournals,
@@ -6,13 +6,23 @@ import {
   updateJournal,
   deleteJournal,
 } from "../../controllers/v1/journalController.js";
-
 import {
+  validatePostJournal,
   validatePutJournal,
-  validatePostJournal
 } from "../../middleware/validation.js";
+import authenticateToken from "../../middleware/authMiddleware.js";
 
 const router = express.Router();
+
+router.use(authenticateToken); // Apply authentication middleware to all routes
+
+router.post("/", validatePostJournal, createJournal);
+router.put("/:id", validatePutJournal, updateJournal);
+router.get("/", getJournals);
+router.get("/:id", getJournal);
+router.delete("/:id", deleteJournal);
+
+export default router;
 
 /**
  * @swagger
@@ -38,10 +48,16 @@ const router = express.Router();
  *           type: string
  *           format: date-time
  *           example: "2023-09-18T12:34:56Z"
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   security:
+ *     - BearerAuth: []
  */
 
 // POST request to create a new journal
-router.post('/', validatePostJournal, createJournal);
 /**
  * @swagger
  * /api/v1/journals:
@@ -49,6 +65,8 @@ router.post('/', validatePostJournal, createJournal);
  *     summary: Create a new Journal
  *     tags:
  *       - Journal
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -91,96 +109,7 @@ router.post('/', validatePostJournal, createJournal);
  *                   example: "An unexpected error occurred"
  */
 
-// GET all journals
-router.get('/', getJournals);
-/**
- * @swagger
- * /api/v1/journals:
- *   get:
- *     summary: Get all journals
- *     tags:
- *       - Journal
- *     responses:
- *       '200':
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Journal'
- *       '404':
- *         description: No journals found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No journals found"
- *       '500':
- *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
- */
-
-// GET a journal by id
-router.get('/:id', getJournal);
-/**
- * @swagger
- * /api/v1/journals/{id}:
- *   get:
- *     summary: Get a journal by id
- *     tags:
- *       - Journal
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The journal id
- *     responses:
- *       '200':
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Journal'
- *       '404':
- *         description: No journal found with the provided id
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No journal with the id: {id} found"
- *       '500':
- *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
- */
-
 // PUT update a journal by id
-router.put('/:id', validatePutJournal, updateJournal);
 /**
  * @swagger
  * /api/v1/journals/{id}:
@@ -188,6 +117,8 @@ router.put('/:id', validatePutJournal, updateJournal);
  *     summary: Update a journal by id
  *     tags:
  *       - Journal
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -247,8 +178,94 @@ router.put('/:id', validatePutJournal, updateJournal);
  *                   example: "An unexpected error occurred"
  */
 
+// GET all journals
+/**
+ * @swagger
+ * /api/v1/journals:
+ *   get:
+ *     summary: Get all journals
+ *     tags:
+ *       - Journal
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Journal'
+ *       '404':
+ *         description: No journals found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No journals found"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
+
+// GET a journal by id
+/**
+ * @swagger
+ * /api/v1/journals/{id}:
+ *   get:
+ *     summary: Get a journal by id
+ *     tags:
+ *       - Journal
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The journal id
+ *     responses:
+ *       '200':
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Journal'
+ *       '404':
+ *         description: No journal found with the provided id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No journal with the id: {id} found"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
+
 // DELETE a journal by id
-router.delete('/:id', deleteJournal);
 /**
  * @swagger
  * /api/v1/journals/{id}:
@@ -256,6 +273,8 @@ router.delete('/:id', deleteJournal);
  *     summary: Delete a journal by id
  *     tags:
  *       - Journal
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -295,5 +314,3 @@ router.delete('/:id', deleteJournal);
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-
-export default router;

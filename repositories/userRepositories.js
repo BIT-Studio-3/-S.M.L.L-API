@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -8,12 +8,15 @@ class UserRepository {
   }
 
   async findAll() {
-    return await prisma.user.findMany();
+    return await prisma.user.findMany({
+      include: { journals: true },
+    });
   }
 
   async findById(id) {
     return await prisma.user.findUnique({
       where: { id },
+      include: { journals: true },
     });
   }
 

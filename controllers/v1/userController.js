@@ -18,11 +18,31 @@ import {
 } from "./baseController.js";
 
 const createUser = createEntity(UserRepository);
-const getUsers = getEntities(UserRepository);
-const getUser = getEntity(UserRepository);
+
+const getUsers = async (req, res) => {
+  try {
+    const users = await UserRepository.findAll();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "An unexpected error occurred" });
+  }
+};
+
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await UserRepository.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: `No user with the id: ${id} found` });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "An unexpected error occurred" });
+  }
+};
+
 const getEmail = async (req, res) => getEmailResource(req, res, "user");
 const updateUser = updateEntity(UserRepository);
 const deleteUser = deleteEntity(UserRepository);
 
 export { createUser, getUsers, getUser, getEmail, updateUser, deleteUser };
-  

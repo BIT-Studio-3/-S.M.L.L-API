@@ -125,4 +125,11 @@ const deleteEntity = (repository) => async (req, res) => {
   }
 };
 
-export { createEntity, getEntities, getEmailResource, getEntity, updateEntity, deleteEntity };
+export {
+  createEntity,
+  getEntities,
+  getEmailResource,
+  getEntity,
+  updateEntity,
+  deleteEntity,
+};
