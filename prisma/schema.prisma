@@ -24,7 +24,7 @@ model User {
 
 model Journal {
   id        String   @id @default(uuid())
-  drinkId   String   @unique // Making drinkId unique
+  drinkId   String
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   timeDrunk DateTime @default(now())

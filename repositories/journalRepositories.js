@@ -8,7 +8,7 @@ class JournalRepository {
   }
 
   async findAll() {
-    return  prisma.journal.findMany();
+    return prisma.journal.findMany();
   }
 
   async findById(id) {

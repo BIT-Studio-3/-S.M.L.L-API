@@ -8,10 +8,7 @@
  */
 
 import JournalRepository from "../../repositories/journalRepositories.js";
-import {
-  updateEntity,
-  deleteEntity,
-} from "./baseController.js";
+import { updateEntity, deleteEntity } from "./baseController.js";
 
 const createJournal = async (req, res) => {
   try {
@@ -43,9 +40,14 @@ const getJournals = async (req, res) => {
 const getJournal = async (req, res) => {
   try {
     const userId = req.user.id; // Get the authenticated user's ID from the request
-    const journal = await JournalRepository.findByIdAndUserId(req.params.id, userId);
+    const journal = await JournalRepository.findByIdAndUserId(
+      req.params.id,
+      userId,
+    );
     if (!journal) {
-      return res.status(404).json({ message: `No journal with the id: ${req.params.id} found` });
+      return res
+        .status(404)
+        .json({ message: `No journal with the id: ${req.params.id} found` });
     }
     return res.status(200).json({ data: journal });
   } catch (err) {

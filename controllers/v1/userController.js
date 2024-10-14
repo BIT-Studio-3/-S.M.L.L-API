@@ -33,7 +33,9 @@ const getUser = async (req, res) => {
   try {
     const user = await UserRepository.findById(id);
     if (!user) {
-      return res.status(404).json({ message: `No user with the id: ${id} found` });
+      return res
+        .status(404)
+        .json({ message: `No user with the id: ${id} found` });
     }
     res.status(200).json(user);
   } catch (error) {
