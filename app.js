@@ -40,7 +40,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "https://s-m-l-l-webservice.onrender.com",
+        url: "http://localhost:3000",
       },
     ],
   },

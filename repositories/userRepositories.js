@@ -4,37 +4,37 @@ const prisma = new PrismaClient();
 
 class UserRepository {
   async create(data) {
-    return await prisma.user.create({ data });
+    return prisma.user.create({ data });
   }
 
   async findAll() {
-    return await prisma.user.findMany({
+    return  prisma.user.findMany({
       include: { journals: true },
     });
   }
 
   async findById(id) {
-    return await prisma.user.findUnique({
+    return prisma.user.findUnique({
       where: { id },
       include: { journals: true },
     });
   }
 
   async findByEmail(email) {
-    return await prisma.user.findUnique({
+    return prisma.user.findUnique({
       where: { email },
     });
   }
 
   async update(id, data) {
-    return await prisma.user.update({
+    return prisma.user.update({
       where: { id },
       data,
     });
   }
 
   async delete(id) {
-    return await prisma.user.delete({
+    return prisma.user.delete({
       where: { id },
     });
   }
