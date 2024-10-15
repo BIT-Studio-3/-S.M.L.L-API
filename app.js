@@ -14,7 +14,7 @@ const app = express();
 
 // Configure CORS to allow requests from your frontend
 const corsOptions = {
-  origin: ["https://s-m-l-l.netlify.app", "http://localhost:3000/","https://s-m-l-l-webservice.onrender.com/"], // Include https://
+  origin: ["https://s-m-l-l.netlify.app", "http://localhost:3000/","https://s-m-l-l-webservice.onrender.com"], // Include https://
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
@@ -40,7 +40,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "https://s-m-l-l-webservice.onrender.com/",
       },
     ],
   },
