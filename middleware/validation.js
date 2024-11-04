@@ -52,6 +52,11 @@ const journalSchema = Joi.object({
     "string.empty": "userId cannot be empty",
     "any.required": "userId is required",
   }),
+  date: Joi.string().required().messages({
+    "string.base": "date should be a string",
+    "string.empty": "date cannot be empty",
+    "any.required": "date is required",
+  }),
 });
 
 const validateSchema = (schema, isRequired = false) => {

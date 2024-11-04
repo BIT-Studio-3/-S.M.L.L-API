@@ -6,10 +6,12 @@ import {
   updateJournal,
   deleteJournal,
 } from "../../controllers/v1/journalController.js";
+
 import {
   validatePostJournal,
   validatePutJournal,
 } from "../../middleware/validation.js";
+
 import authenticateToken from "../../middleware/authMiddleware.js";
 
 const router = express.Router();
