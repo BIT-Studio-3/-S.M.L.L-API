@@ -55,7 +55,6 @@ const journalSchema = Joi.object({
   timeDrunk: Joi.date().iso().required().messages({
     "date.base": "timeDrunk should be a valid date",
     "date.format": "timeDrunk should be in ISO 8601 format",
-    "any.required": "timeDrunk is required",
   }),
 });
 
