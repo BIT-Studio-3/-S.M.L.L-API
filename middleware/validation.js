@@ -52,10 +52,10 @@ const journalSchema = Joi.object({
     "string.empty": "userId cannot be empty",
     "any.required": "userId is required",
   }),
-  date: Joi.string().required().messages({
-    "string.base": "date should be a string",
-    "string.empty": "date cannot be empty",
-    "any.required": "date is required",
+  timeDrunk: Joi.date().iso().required().messages({
+    "date.base": "timeDrunk should be a valid date",
+    "date.format": "timeDrunk should be in ISO 8601 format",
+    "any.required": "timeDrunk is required",
   }),
 });
 
